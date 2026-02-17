@@ -8,18 +8,11 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// FORCE MOCK MODE FOR DEMO
-// FORCE MOCK MODE FOR DEMO
-global.MOCK_MODE = true;
-global.MOCK_USERS = []; // Store registered users in memory
-global.MOCK_PROGRAMS = [];
-global.MOCK_COURSES = [];
-global.MOCK_FACULTY = [];
-global.MOCK_ROOMS = [];
-console.log('⚠️ FORCING MOCK MODE ON STARTUP');
-
 // Middleware
-app.use(cors());
+app.use(cors({
+    origin: ['http://localhost:5173', 'https://harshanasathasivam-bit.github.io'],
+    credentials: true
+}));
 app.use(express.json());
 
 // Database Connection
@@ -62,6 +55,11 @@ const connectDB = async () => {
             console.warn('⚠️ CRITICAL: ALL DATABASE CONNECTIONS FAILED.');
             console.warn('⚠️ SWITCHING TO MOCK MODE. DATA WILL NOT BE SAVED.');
             global.MOCK_MODE = true;
+            global.MOCK_USERS = [];
+            global.MOCK_PROGRAMS = [];
+            global.MOCK_COURSES = [];
+            global.MOCK_FACULTY = [];
+            global.MOCK_ROOMS = [];
         }
     }
 };
