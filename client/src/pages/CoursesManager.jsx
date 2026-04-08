@@ -10,6 +10,8 @@ const CoursesManager = () => {
         code: '',
         credits: 4,
         type: 'Theory',
+        category: 'Core',
+        hoursPerWeek: 4,
         semester: '',
         program: ''
     });
@@ -48,12 +50,10 @@ const CoursesManager = () => {
             toast.success('Course Added Successfully');
             fetchCourses();
             setFormData({
+                ...formData,
                 title: '',
                 code: '',
-                credits: 4,
-                type: 'Theory',
-                semester: '',
-                program: formData.program // Keep the program selected for convenience
+                semester: ''
             });
         } catch (error) {
             toast.error(error.response?.data?.message || 'Failed to add course');
@@ -105,7 +105,15 @@ const CoursesManager = () => {
                         placeholder="Credits"
                         className="border p-2 rounded"
                         value={formData.credits}
-                        onChange={(e) => setFormData({ ...formData, credits: e.target.value })}
+                        onChange={(e) => setFormData({ ...formData, credits: e.target.value, hoursPerWeek: e.target.value })}
+                        required
+                    />
+                    <input
+                        type="number"
+                        placeholder="Hours per Week"
+                        className="border p-2 rounded"
+                        value={formData.hoursPerWeek}
+                        onChange={(e) => setFormData({ ...formData, hoursPerWeek: e.target.value })}
                         required
                     />
                     <select
@@ -114,7 +122,20 @@ const CoursesManager = () => {
                         onChange={(e) => setFormData({ ...formData, type: e.target.value })}
                     >
                         <option value="Theory">Theory</option>
-                        <option value="Lab">Lab</option>
+                        <option value="Practical">Practical</option>
+                        <option value="Tutorial">Tutorial</option>
+                    </select>
+                    <select
+                        className="border p-2 rounded"
+                        value={formData.category}
+                        onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                    >
+                        <option value="Core">Core</option>
+                        <option value="Major">Major</option>
+                        <option value="Minor">Minor</option>
+                        <option value="Skill">Skill</option>
+                        <option value="AEC">AEC</option>
+                        <option value="VAC">VAC</option>
                     </select>
                     <button type="submit" className="bg-indigo-600 text-white p-2 rounded md:col-span-2">
                         Add Course
@@ -133,6 +154,8 @@ const CoursesManager = () => {
                                 <th className="p-2">Program</th>
                                 <th className="p-2">Sem</th>
                                 <th className="p-2">Type</th>
+                                <th className="p-2">Category</th>
+                                <th className="p-2">Hrs/Wk</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -145,6 +168,8 @@ const CoursesManager = () => {
                                         <td className="p-2 text-sm text-gray-600">{prog ? prog.name : 'Unknown'}</td>
                                         <td className="p-2">{course.semester}</td>
                                         <td className="p-2 text-sm">{course.type}</td>
+                                        <td className="p-2 text-sm">{course.category}</td>
+                                        <td className="p-2 text-sm">{course.hoursPerWeek}</td>
                                     </tr>
                                 );
                             })}

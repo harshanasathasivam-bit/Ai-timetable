@@ -92,6 +92,7 @@ const FacultyManager = () => {
                         <tr className="border-b">
                             <th className="p-2">Name</th>
                             <th className="p-2">Email</th>
+                            <th className="p-2">Designation</th>
                             <th className="p-2">Department</th>
                             <th className="p-2">Max Load</th>
                         </tr>
@@ -101,6 +102,7 @@ const FacultyManager = () => {
                             <tr key={fac._id} className="border-b">
                                 <td className="p-2">{fac.name}</td>
                                 <td className="p-2">{fac.email}</td>
+                                <td className="p-2">{fac.designation}</td>
                                 <td className="p-2">{fac.department}</td>
                                 <td className="p-2">{fac.maxLoad}</td>
                             </tr>

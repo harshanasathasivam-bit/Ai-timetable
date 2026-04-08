@@ -1,5 +1,4 @@
-import React from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, Link } from 'react-router-dom';
 import ProgramsManager from './ProgramsManager';
 import CoursesManager from './CoursesManager';
 import FacultyManager from './FacultyManager';
@@ -26,27 +25,27 @@ const Dashboard = () => {
                     NEP Timetable
                 </div>
                 <nav className="flex-1 p-4 space-y-2">
-                    <a href="/dashboard" className="flex items-center p-2 hover:bg-indigo-700 rounded">
+                    <Link to="/dashboard" className="flex items-center p-2 hover:bg-indigo-700 rounded">
                         <LayoutDashboard className="mr-3" size={20} /> Dashboard
-                    </a>
-                    <a href="/dashboard/programs" className="flex items-center p-2 hover:bg-indigo-700 rounded">
+                    </Link>
+                    <Link to="/dashboard/programs" className="flex items-center p-2 hover:bg-indigo-700 rounded">
                         <BookOpen className="mr-3" size={20} /> Programs
-                    </a>
-                    <a href="/dashboard/courses" className="flex items-center p-2 hover:bg-indigo-700 rounded">
+                    </Link>
+                    <Link to="/dashboard/courses" className="flex items-center p-2 hover:bg-indigo-700 rounded">
                         <BookOpen className="mr-3" size={20} /> Courses
-                    </a>
-                    <a href="/dashboard/faculty" className="flex items-center p-2 hover:bg-indigo-700 rounded">
+                    </Link>
+                    <Link to="/dashboard/faculty" className="flex items-center p-2 hover:bg-indigo-700 rounded">
                         <Users className="mr-3" size={20} /> Faculty
-                    </a>
-                    <a href="/dashboard/rooms" className="flex items-center p-2 hover:bg-indigo-700 rounded">
+                    </Link>
+                    <Link to="/dashboard/rooms" className="flex items-center p-2 hover:bg-indigo-700 rounded">
                         <School className="mr-3" size={20} /> Rooms
-                    </a>
-                    <a href="/dashboard/generate" className="flex items-center p-2 hover:bg-indigo-700 rounded">
+                    </Link>
+                    <Link to="/dashboard/generate" className="flex items-center p-2 hover:bg-indigo-700 rounded">
                         <Calendar className="mr-3" size={20} /> Timetable
-                    </a>
-                    <a href="/dashboard/leaves" className="flex items-center p-2 hover:bg-indigo-700 rounded">
+                    </Link>
+                    <Link to="/dashboard/leaves" className="flex items-center p-2 hover:bg-indigo-700 rounded">
                         <MessageSquare className="mr-3" size={20} /> Leave Requests
-                    </a>
+                    </Link>
                 </nav>
                 <div className="p-4 border-t border-indigo-700">
                     <div className="mb-2 text-sm">{user?.name}</div>
