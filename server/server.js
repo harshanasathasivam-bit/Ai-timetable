@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors({
-    origin: ['http://localhost:5173', 'https://harshanasathasivam-bit.github.io'],
+    origin: ['http://localhost:5173', 'http://localhost:5174', 'http://127.0.0.1:5173', 'http://127.0.0.1:5174', 'https://harshanasathasivam-bit.github.io'],
     credentials: true
 }));
 app.use(express.json());
@@ -20,8 +20,7 @@ app.use(express.json());
 const connectDB = async () => {
     try {
         await mongoose.connect(process.env.MONGO_URI, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
+            serverSelectionTimeoutMS: 2000
         });
         console.log('MongoDB Connected (Local)');
     } catch (err) {
@@ -31,10 +30,7 @@ const connectDB = async () => {
             const { MongoMemoryServer } = require('mongodb-memory-server');
             const mongod = await MongoMemoryServer.create();
             const uri = mongod.getUri();
-            await mongoose.connect(uri, {
-                useNewUrlParser: true,
-                useUnifiedTopology: true,
-            });
+            await mongoose.connect(uri);
             console.log('MongoDB Connected (In-Memory Fallback)');
 
             // Seed data for in-memory instance

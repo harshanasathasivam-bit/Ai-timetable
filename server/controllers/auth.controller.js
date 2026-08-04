@@ -8,15 +8,17 @@ const generateToken = (id) => {
 
 exports.register = async (req, res) => {
     const { name, email, password, role } = req.body;
+    const cleanEmail = email ? email.toLowerCase().trim() : '';
+    const cleanRole = role ? role.toLowerCase().trim() : 'faculty';
 
     if (global.MOCK_MODE) {
-        console.log('Mock Registration:', { name, email, role });
+        console.log('Mock Registration:', { name, email: cleanEmail, role: cleanRole });
         const newUser = {
             _id: 'mock_user_id_' + Date.now(),
             name,
-            email,
-            password, // In a real app, hash this!
-            role,
+            email: cleanEmail,
+            password,
+            role: cleanRole,
         };
         global.MOCK_USERS.push(newUser);
 
@@ -30,10 +32,10 @@ exports.register = async (req, res) => {
     }
 
     try {
-        const userExists = await User.findOne({ email });
-        if (userExists) return res.status(400).json({ message: 'User already exists' });
+        const userExists = await User.findOne({ email: cleanEmail }).lean();
+        if (userExists) return res.status(400).json({ message: 'User already exists with this email' });
 
-        const user = await User.create({ name, email, password, role });
+        const user = await User.create({ name, email: cleanEmail, password, role: cleanRole });
         res.status(201).json({
             _id: user._id,
             name: user.name,
@@ -77,7 +79,8 @@ exports.login = async (req, res) => {
     }
 
     try {
-        const user = await User.findOne({ email });
+        const cleanEmail = email ? email.toLowerCase().trim() : '';
+        const user = await User.findOne({ email: cleanEmail });
         if (user && (await user.matchPassword(password))) {
             res.json({
                 _id: user._id,
